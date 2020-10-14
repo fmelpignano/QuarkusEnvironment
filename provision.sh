@@ -23,8 +23,8 @@ sudo yum -y install unzip
 # To create Git Repositories
 sudo yum -y install git
 
-echo "Installing OpenJdk 11"
-sudo yum install -y java-11-openjdk-devel
+echo "Installing OpenJdk 1.8"
+sudo yum install -y java-1.8-openjdk-devel
 
 # Maven 3.6.3 and higher required to use Quarkus
 echo "Installing Maven 3.6.3"
@@ -50,12 +50,20 @@ QUARKUS_ENV_FILE=/etc/profile.d/env_vars_quarkus.sh
 if [ ! -f "$QUARKUS_ENV_FILE" ]; then
     echo "$QUARKUS_ENV_FILE does not exist."
 	sudo bash -c 'cat <<EOF > /etc/profile.d/env_vars_quarkus.sh
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.8.10-0.el7_8.x86_64/
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64/
 export PATH=\$PATH:\$JAVA_HOME/bin
 export M2_HOME=/opt/maven
 export MAVEN_HOME=$M2_HOME
 export PATH=$M2_HOME/bin:$PATH
 EOF'
 fi
+
+# For Docker image generation
+# https://docs.docker.com/engine/install/centos/#install-using-the-convenience-script
+# Not for production purpose! 
+curl -fsSL https://get.docker.com/ | sh
+sudo systemctl start docker
+sudo systemctl status docker
+sudo systemctl enable docker
 
 # https://www.graalvm.org/docs/getting-started-with-graalvm/linux/

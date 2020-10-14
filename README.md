@@ -49,7 +49,41 @@ vagrant up --provision
 ```
 to trigger it again.
 
-Also, this step (as well as the first start) involves several updates aand might take time depending on internet connection. 
+Also, this step (as well as the first start) involves several updates and it might take time depending on internet connection.
+
+### Note about Java SDK version
+Once provisioning completed, it could be needed to choose the JAVA SDK version to be used. 
+
+For pokemon_challenge project it is OpenJDK 1.8.
+```shell script
+vagrant ssh
+
+[vagrant@localhost ~]$ sudo update-alternatives --config java
+
+There are 2 programs which provide 'java'.
+
+  Selection    Command
+-----------------------------------------------
+*+ 1           java-1.8.0-openjdk.x86_64 (/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64/jre/bin/java)
+   2           java-11-openjdk.x86_64 (/usr/lib/jvm/java-11-openjdk-11.0.8.10-0.el7_8.x86_64/bin/java)
+
+Enter to keep the current selection[+], or type selection number: 1
+```
+
+#### Why OpenJDK 1.8 ?
+This version is able to complete a Docker image build (which have been tested and working). 
+
+It is still tolerated but deprecated, as a warning shows you during server start. 
+
+#### Why OpenJDK 11 ?
+This is the version that will be supported in the future and new projects should use this one.
+
+However it seems as there are issues when using this version to build a Docker image with Maven and Quarkus Docker plugin.
+
+### Note about Docker installation
+Docker is installed using a convenience script, following [Docker official site guide](https://docs.docker.com/engine/install/centos/#install-using-the-convenience-script)
+
+Reason is that it is the faster way to automate Docker installation however this is not suited for a Production environment and downloaded script should always be inspected before execution. 
 
 ## SSH connectiviy
 
@@ -57,13 +91,21 @@ To open a shell to the Virtual Machine once started:
 ```shell script
 vagrant ssh
 ```
-## Source code and compilation
+## Source code 
 
 The source code should normally be available under:
 ```shell script
 cd /home/vagrant/workspace
 ```
 And it should be mapped on src folder within this repository, in the Host.
+
+From the virtual machine you should be able to clone the Pokemon Challenge repository as following:
+```shell script
+cd /home/vagrant/workspace
+git clone https://github.com/fmelpignano/pokemon_challenge.git 
+```
+
+To know more about Pokemon Challenge project, please refer to its [README page](https://github.com/fmelpignano/pokemon_challenge/blob/main/README.md)
 
 ## Stop
 
