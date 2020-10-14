@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "./src", "/home/vagrant/workspace/truelayer"
   
   config.vm.provider "virtualbox" do |v|
-    v.name = "truelayer_11"
+    v.name = "truelayer_8"
     v.memory = "2048"
     v.cpus = "2"
   end
